@@ -5,6 +5,8 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en) {
 
 	int i,j;
 	int color;
+	int base_x, base_y;
+	int move_x_a, move_x_b, move_y_a, move_y_b;
 
 	static unsigned int draw_counter = 0;
 
@@ -17,26 +19,12 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en) {
 	for (i = 0; i < 8; i++) {
 		for (j = 0; j < 8; j++) {
 
-			//色変換
-			switch(ch->map[j][i+8]) {
-				case 1:
-					color = 119;//赤
-					break;
-				case 2:
-					color = 19;//青
-					break;
-				case 3:
-					color = 89;//黄色
-					break;
-				case 4:
-					color = 59;//緑
-					break;
-				case 5:
-					color = 159;//紫
-					break;
-			}
 			//消去は描画なし
 			if (ch->map[j][i + PUZ_COL] != 0) {
+
+				//色をセット ※(8,8)で投げる。
+				color = Translate_Color(ch, j, i);
+
 				//消去前点滅　カウンタが奇数のときに小さい玉
 				if (ch->rule_state == 1 && ch->reserve[j][i] == 1 && draw_counter%10 <= 4) {
 					DrawExtendGraph(32 * j + PUZZLE_X, 32 * i + PUZZLE_Y, 32 * j + 32 + PUZZLE_X, 32 * i + 32 + PUZZLE_Y, gr->jewel[color-3], TRUE);
@@ -81,6 +69,46 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en) {
 		DrawGraph(370 + 24 * i, 200, gr->heart, TRUE);
 	}
 
+
+
+	//玉消去時の破裂描画
+	for (i = 0; i < BURST; i++) {
+		if (ch->burst_timer[i] > 0) {
+			//長いので変数化。8は中心から描画するためにずらしている座標。
+			base_x = 32 * ch->burst_x[i] + PUZZLE_X + 8;
+			base_y = 32 * ch->burst_y[i] + PUZZLE_Y + 8;
+
+			move_x_a = (30 - ch->burst_timer[i]) * 3;
+			move_x_b = (30 - ch->burst_timer[i]) * 2;
+			move_y_a = (24 - ch->burst_timer[i]) *(24 - ch->burst_timer[i])/2;
+			move_y_b = (26 - ch->burst_timer[i]) *(26 - ch->burst_timer[i])/2;
+			
+			//破裂4方向
+
+			//右上
+			DrawExtendGraph(base_x + move_x_a, base_y + move_y_a,
+							base_x + move_x_a + 32, base_y + move_y_a + 32,
+							gr->jewel[ch->burst_color[i] - 3], TRUE);
+			//右下
+			DrawExtendGraph(base_x + move_x_b, base_y + move_y_b,
+							base_x + move_x_b + 32, base_y + move_y_b + 32,
+							gr->jewel[ch->burst_color[i] - 3], TRUE);
+
+			//右上
+			DrawExtendGraph(base_x - move_x_a, base_y + move_y_a,
+							base_x - move_x_a + 32, base_y + move_y_a + 32,
+							gr->jewel[ch->burst_color[i] - 3], TRUE);
+			//右下
+			DrawExtendGraph(base_x - move_x_b, base_y + move_y_b,
+							base_x - move_x_b + 32, base_y + move_y_b + 32,
+							gr->jewel[ch->burst_color[i] - 3], TRUE);
+
+			ch->burst_timer[i]--;
+		}
+	}
+	
+
 	if (draw_counter != 65535)draw_counter++;	//１周毎にカウント
 	else draw_counter = 0;
 }
+

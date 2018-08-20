@@ -93,10 +93,17 @@ void Apply_Rule(ch_t *ch, graph_t *gr) {
 				for (j = 0; j < PUZ_COL; j++) {
 					//消去フラグを立てたマスは消去
 					if (ch->reserve[i][j] == 1) {
+
+						//破裂仕込みルーチン
+						Set_Burst(ch, i, j);
+
 						//アクティブPUZZLEは8~15
 						ch->map[i][j + PUZ_COL] = 0;
 						//初期化
 						ch->reserve[i][j] = 0;
+
+
+
 					}
 				}
 			}
@@ -195,4 +202,30 @@ int Gravity_Search(ch_t *ch,int x,int y) {
 		answer = y;
 	}
 	return answer;
+}
+
+//*********************************
+//　破裂仕込みルーチン
+//*********************************
+
+void Set_Burst(ch_t *ch, int x, int y) {
+	
+	int my,i;
+	
+	//破裂数のインクリメント
+	ch->burst_current++;
+	//インクリメントのオーバーフロー防止
+	if (ch->burst_current == 65501)ch->burst_current = 1;
+
+	//BURST:100の余り
+	my = ch->burst_current%BURST;
+
+	ch->burst_x[my] = x;
+	ch->burst_y[my] = y;
+
+	//カウントをセット
+	ch->burst_timer[my] = 30;
+
+	//色をセット
+	ch->burst_color[my] = Translate_Color(ch, x, y);
 }

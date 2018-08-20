@@ -14,6 +14,8 @@
 #define PUZ_COL 8
 #define PUZ_MAX_COL 16
 
+#define BURST 100
+
 //敵キャラ種類合計
 #define ENEMY 20
 
@@ -58,6 +60,19 @@ typedef struct {
 	int reserve[8][16];
 	//落下距離(8*8。念のため16)
 	int fall[8][16];
+	//破裂アニメーション用配列
+	int burst_x[BURST],burst_y[BURST];
+
+	//破裂数カウンタ
+	int burst_current;
+	//破裂数ID
+	int burst_id;
+	//破裂管理配列(burst_manage[カウンタ]=ID)
+	int burst_manage[BURST];
+	//破裂アニメーションタイムカウンタ
+	int burst_timer[BURST];
+	//破裂色
+	int burst_color[BURST];
 
 	//色種類
 	int color_num;
@@ -139,17 +154,33 @@ typedef struct {
 
 //プロトタイプの宣言
 
+//【Funciton.cpp】
+
 extern int GetHitKeyStateAll_2(int KeyStateBuf[]);
 extern void wait_fanc(void);
+extern int Translate_Color(ch_t *ch, int j, int i);
 
-extern void Load_Graph(graph_t *gr);
-extern void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en);
+//【First.cpp】
+
 extern void Init(ch_t *ch,enemy_t *en);
 extern void Final_Check(ch_t *ch, int x, int y);
+
+//【Draw_Graph.cpp】
+
+extern void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en);
+
+//【Load_Graph.cpp】
+
+extern void Load_Graph(graph_t *gr);
+
+//【Controller.cpp】
 
 extern void Controller(ch_t *ch);
 extern void Move_Only_Controller(ch_t *ch);
 
+//【Apply_Rule.cpp】
+
 extern void Apply_Rule(ch_t *ch, graph_t *gr);
 extern int Gravity_Search(ch_t *ch, int x, int y);
+extern void Set_Burst(ch_t *ch, int x, int y);
 #endif
