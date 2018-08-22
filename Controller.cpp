@@ -6,11 +6,11 @@ extern int main_state;
 
 void Controller(ch_t *ch) {
 
-	int hoge;
+	int i,hoge;
 
 	if (Key[KEY_INPUT_X] == 1) {
 
-	//	break;
+		//	break;
 	}
 	//右押したら右。(横2マスの枠なので-2)
 	if (Key[KEY_INPUT_RIGHT] == 1 && ch->x != PUZ_ROW - 2) {
@@ -29,10 +29,20 @@ void Controller(ch_t *ch) {
 		ch->y++;
 	}
 	//左右シャッフル
-	if (Key[KEY_INPUT_Z] == 1 ) {
+	if (Key[KEY_INPUT_Z] == 1) {
 		hoge = ch->map[ch->x][ch->y + 8];
 		ch->map[ch->x][ch->y + 8] = ch->map[ch->x + 1][ch->y + 8];
 		ch->map[ch->x + 1][ch->y + 8] = hoge;
+		main_state = 1;
+	}
+	//攻撃確定
+	if (Key[KEY_INPUT_C] == 1) {
+		//消去のルール適用
+		ch->rule_state = 1;
+		//セットの枠の玉を消去
+		for (i = 0; i < PUZ_ROW; i++) {
+			ch->reserve[i][ch->set_y] = 1;
+		}
 		main_state = 1;
 	}
 
