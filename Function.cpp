@@ -49,6 +49,9 @@ int Translate_Color(ch_t *ch, int j, int i) {
 		case 5:
 			color = 159;//‡
 			break;
+		default:
+			color = 199;//•
+			break;
 	}
 	return color;
 }

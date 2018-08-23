@@ -37,6 +37,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				Move_Only_Controller(&ch);
 				Apply_Rule(&ch, &gr);
 				break;
+			case 2:
+				//戦闘
+				Battle(&ch, &en);
+				break;
 		}
 		Draw_Graph(&ch,&gr,&en);
 
@@ -211,6 +215,7 @@ void Final_Check(ch_t *ch,int x,int y) {
 }
 
 /*
+20180823 スキル表示用のウィンドウを仮作成。パズル背景を仮置き。 
 20180822 Cキーで攻撃枠の玉を消すように。Cキーでの実行は仮。
 20180820 玉の消去時に破裂アニメーションを追加。ちょっとした賑やかし。
 20180819 お盆の間一週間触れず。落下アニメーション追加、連鎖・落下との兼ね合いを調整し基本パズル部分はいったん完成。

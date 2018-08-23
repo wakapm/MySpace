@@ -183,4 +183,8 @@ extern void Move_Only_Controller(ch_t *ch);
 extern void Apply_Rule(ch_t *ch, graph_t *gr);
 extern int Gravity_Search(ch_t *ch, int x, int y);
 extern void Set_Burst(ch_t *ch, int x, int y);
+
+//ÅyBattle.cppÅz
+
+extern void Battle(ch_t *ch, enemy_t *en);
 #endif

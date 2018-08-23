@@ -10,10 +10,15 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en) {
 
 	static unsigned int draw_counter = 0;
 
-	// ‰æ–Ê‚ğ”’‚Å“h‚è‚Â‚Ô‚·
+	// ‰æ–Ê‚ğ•‚Å“h‚è‚Â‚Ô‚·
 	DrawBox(0, 0, 640, 480, GetColor(0, 0, 0), TRUE);
 	//”wŒi•`‰æ
 	DrawGraph(0, 0, gr->scape[0], TRUE);
+
+	//ƒpƒYƒ‹”wŒi
+	//DrawBox(PUZZLE_X, PUZZLE_Y, 32 * PUZ_ROW + PUZZLE_X, 32 * PUZ_COL + PUZZLE_Y, GetColor(255, 255, 255), TRUE);
+	DrawBox(PUZZLE_X, PUZZLE_Y, 32 * PUZ_ROW + PUZZLE_X, 32 * PUZ_COL + PUZZLE_Y, GetColor(55, 55, 55), TRUE);
+	DrawExtendGraph(PUZZLE_X, PUZZLE_Y, 32*PUZ_ROW + PUZZLE_X, 32 * PUZ_COL + PUZZLE_Y, gr->skill_window[0], TRUE);
 
 	//‹Ê•`‰æ
 	for (i = 0; i < 8; i++) {
@@ -69,6 +74,13 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en) {
 		DrawGraph(370 + 24 * i, 200, gr->heart, TRUE);
 	}
 
+	//ƒXƒLƒ‹ƒEƒBƒ“ƒhƒE
+	// ‰æ–Ê‚ğ”’‚Å“h‚è‚Â‚Ô‚·
+	DrawBox(310, 240, 600, 440, GetColor(255, 255, 255), FALSE);
+	DrawBox(310 + 4, 240 + 4, 600 + 4, 440 + 4, GetColor(255, 255, 255), FALSE);
+	DrawBox(310 + 6, 240 + 6, 600 - 2, 440 - 2, GetColor(240, 240, 105), TRUE);
+	
+	//DrawExtendGraph(360, 240, 600, 440, gr->skill_window[0], TRUE);
 
 
 	//‹ÊÁ‹‚Ì”j—ô•`‰æ
