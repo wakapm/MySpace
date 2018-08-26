@@ -1,6 +1,7 @@
 /* function.cpp */
 #include "DxLib.h"
 #include "Header.h"
+#include "math.h"
 
 extern int Key[256];//キー
 
@@ -29,11 +30,11 @@ void wait_fanc() {
 //*****************************
 //　色変換 (i,j)は8*8で渡す
 //*****************************
-int Translate_Color(ch_t *ch, int j, int i) {
+int Translate_Color(int num) {
 
 	int color;
 
-	switch (ch->map[j][i + PUZ_COL]) {
+	switch (num) {
 		case 1:
 			color = 119;//赤
 			break;
@@ -54,4 +55,26 @@ int Translate_Color(ch_t *ch, int j, int i) {
 			break;
 	}
 	return color;
+}
+
+//*****************************
+//　対象桁の数字抽出
+//　例：12345の4桁目⇒2
+//  (math.hを使用)
+//*****************************
+int Pick_Number(int gene,int pick) {
+
+	int answer;
+
+	int hoge1, hoge2, hoge3;
+
+	hoge1 = gene / pow(10, pick - 1);
+	hoge2 = gene / pow(10, pick);
+	hoge3 = hoge2 * 10;
+
+	//べき乗と差を利用して対象桁を抽出
+	answer = hoge1 - hoge3;
+
+
+	return answer;
 }

@@ -17,11 +17,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	enemy_t en;
 	//敵データマスタ構造体
 	enemy_t em[20];
+	//スキルデータ構造体
+	skill_t sk[50];
 
 	//ウィンドウ化と初期化処理
 	if (ChangeWindowMode(TRUE) != DX_CHANGESCREEN_OK || DxLib_Init() == -1) return -1;
 
 	Load_Graph(&gr);
+	Load_Skill(sk);
 	Init(&ch,&en);
 
 	while (!ProcessMessage() && !ClearDrawScreen()
@@ -39,10 +42,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				break;
 			case 2:
 				//戦闘
-				Battle(&ch, &en);
+				Battle(&ch, &en,sk);
 				break;
 		}
-		Draw_Graph(&ch,&gr,&en);
+		Draw_Graph(&ch,&gr,&en,sk);
 
 
 		if (Key[KEY_INPUT_X] == 1) {

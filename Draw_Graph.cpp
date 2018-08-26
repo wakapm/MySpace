@@ -1,12 +1,15 @@
 #include "DxLib.h"
 #include "Header.h"
 
-void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en) {
+
+void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en,skill_t sk[]) {
 
 	int i,j;
-	int color;
+	int color,pick_id;
 	int base_x, base_y;
 	int move_x_a, move_x_b, move_y_a, move_y_b;
+
+	int mes_color = GetColor(100, 100, 100), shd_color = GetColor(255, 255, 255);
 
 	static unsigned int draw_counter = 0;
 
@@ -27,8 +30,8 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en) {
 			//消去は描画なし
 			if (ch->map[j][i + PUZ_COL] != 0) {
 
-				//色をセット ※(8,8)で投げる。
-				color = Translate_Color(ch, j, i);
+				//色をセット 
+				color = Translate_Color(ch->map[j][i + PUZ_COL]);
 
 				//消去前点滅　カウンタが奇数のときに小さい玉
 				if (ch->rule_state == 1 && ch->reserve[j][i] == 1 && draw_counter%10 <= 4) {
@@ -80,6 +83,22 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en) {
 	DrawBox(310 + 4, 240 + 4, 600 + 4, 440 + 4, GetColor(255, 255, 255), FALSE);
 	DrawBox(310 + 6, 240 + 6, 600 - 2, 440 - 2, GetColor(240, 240, 105), TRUE);
 	
+	//スキルお品書き(後々所持スキルを表示するようにする)
+	SetFontSize(20);
+	ChangeFont("メイリオ");
+
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < sk[i].number; j++) {
+
+			//スキル発動用の玉の色をgeneより抽出
+			pick_id = Pick_Number(sk[i].gene, sk[i].number - j);
+			color = Translate_Color(pick_id);
+
+			DrawExtendGraph(320 + 20 * j, 250 + 20 * i, 320 + 20 * j + 20,250 + 20 * i + 20, gr->jewel[color], TRUE);
+		}
+		DrawFormatString(320 + 20 * j + 1, 250 + 20 * i + 1, shd_color, "%dダメージ", sk[i].base_damage);//影
+		DrawFormatString(320 + 20 * j    , 250 + 20 * i    , mes_color, "%dダメージ", sk[i].base_damage);//
+	}
 	//DrawExtendGraph(360, 240, 600, 440, gr->skill_window[0], TRUE);
 
 

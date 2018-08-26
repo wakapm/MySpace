@@ -4,7 +4,7 @@
 extern int Key[256];//ÉLÅ[
 extern int main_state;
 
-void Battle(ch_t *ch, enemy_t *en) {
+void Battle(ch_t *ch, enemy_t *en, skill_t sk[]) {
 
 	int i, hoge;
 

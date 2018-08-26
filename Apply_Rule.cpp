@@ -227,5 +227,5 @@ void Set_Burst(ch_t *ch, int x, int y) {
 	ch->burst_timer[my] = 30;
 
 	//色をセット
-	ch->burst_color[my] = Translate_Color(ch, x, y);
+	ch->burst_color[my] = Translate_Color(ch->map[x][y + PUZ_COL]);
 }

@@ -152,13 +152,31 @@ typedef struct {
 
 }enemy_t;
 
+typedef struct {
+	//–¼‘O
+	char name[20];
+	//‰æ‘œ
+	int img;
+	
+	//‹ÊŒÂ”
+	int number;
+	//”­“®‹Ê‘g¬
+	int gene;
+	//Šî–{ƒ_ƒ[ƒW
+	int base_damage;
+	//“ÁêŒø‰Ê
+	int special;
+
+}skill_t;
+
 //ƒvƒƒgƒ^ƒCƒv‚ÌéŒ¾
 
 //yFunciton.cppz
 
 extern int GetHitKeyStateAll_2(int KeyStateBuf[]);
 extern void wait_fanc(void);
-extern int Translate_Color(ch_t *ch, int j, int i);
+extern int Translate_Color(int num);
+extern int Pick_Number(int gene, int pick);
 
 //yFirst.cppz
 
@@ -167,7 +185,7 @@ extern void Final_Check(ch_t *ch, int x, int y);
 
 //yDraw_Graph.cppz
 
-extern void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en);
+extern void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en, skill_t sk[]);
 
 //yLoad_Graph.cppz
 
@@ -186,5 +204,9 @@ extern void Set_Burst(ch_t *ch, int x, int y);
 
 //yBattle.cppz
 
-extern void Battle(ch_t *ch, enemy_t *en);
+extern void Battle(ch_t *ch, enemy_t *en,skill_t sk[]);
+
+//
+
+extern void Load_Skill(skill_t sk[]);
 #endif
