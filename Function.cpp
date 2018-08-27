@@ -50,6 +50,23 @@ int Translate_Color(int num) {
 		case 5:
 			color = 159;//紫
 			break;
+
+		case 11:
+			color = 114;//赤ダイヤ
+			break;
+		case 12:
+			color = 14;//青ダイヤ
+			break;
+		case 13:
+			color = 84;//黄色ダイヤ
+			break;
+		case 14:
+			color = 54;//緑ダイヤ
+			break;
+		case 15:
+			color = 154;//紫ダイヤ
+			break;
+
 		default:
 			color = 199;//黒
 			break;

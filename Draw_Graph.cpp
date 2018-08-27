@@ -9,7 +9,7 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en,skill_t sk[]) {
 	int base_x, base_y;
 	int move_x_a, move_x_b, move_y_a, move_y_b;
 
-	int mes_color = GetColor(100, 100, 100), shd_color = GetColor(255, 255, 255);
+	int mes_color = GetColor(0, 0, 0), shd_color = GetColor(255, 255, 255), hp_color = GetColor(255,200,0);
 
 	static unsigned int draw_counter = 0;
 
@@ -60,7 +60,12 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en,skill_t sk[]) {
 	//DrawGraph(24 * ch->x + PUZZLE_X, 24 * ch->y + PUZZLE_Y, gr->choice[0], TRUE);
 
 	//枠描画
-	DrawExtendGraph(32 * ch->x + PUZZLE_X, 32 * ch->y + PUZZLE_Y, 32 * ch->x + 64 + PUZZLE_X, 32 * ch->y + 32 + PUZZLE_Y, gr->choice[0], TRUE);
+	if (ch->mode == 0) {
+		DrawExtendGraph(32 * ch->x + PUZZLE_X, 32 * ch->y + PUZZLE_Y, 32 * ch->x + 64 + PUZZLE_X, 32 * ch->y + 32 + PUZZLE_Y, gr->choice[0], TRUE);
+	}
+	else if(ch->mode == 1) {
+		DrawExtendGraph(32 * ch->x + PUZZLE_X, 32 * ch->y + PUZZLE_Y, 32 * ch->x + 32 + PUZZLE_X, 32 * ch->y + 32 + PUZZLE_Y, gr->choice[0], TRUE);
+	}
 	DrawExtendGraph(PUZZLE_X, 32 * ch->set_y + PUZZLE_Y, 32*8 + PUZZLE_X, 32 * ch->set_y + 32 + PUZZLE_Y, gr->choice[1], TRUE);
 
 
@@ -71,6 +76,11 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en,skill_t sk[]) {
 	//hpバーの表示
 	DrawGraph(370, 160, gr->hp_bar[0], TRUE);
 	DrawRectGraph(370, 160, 0, 0, 7 + 114 * (en->hp * 100 / en->maxhp) / 100, 32, gr->hp_bar[1], TRUE, FALSE);
+	//hp表示
+	SetFontSize(12);
+	DrawFormatString(410 - 1, 160 - 1, mes_color, "%d/%d", en->hp, en->maxhp);//影
+	DrawFormatString(410 + 1, 160 + 1, mes_color, "%d/%d", en->hp, en->maxhp);//影
+	DrawFormatString(410    , 160    , hp_color, "%d/%d", en->hp, en->maxhp);//
 
 	//ハート
 	for (i = 0; i < 5; i++) {
@@ -81,13 +91,13 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en,skill_t sk[]) {
 	// 画面を白で塗りつぶす
 	DrawBox(310, 240, 600, 440, GetColor(255, 255, 255), FALSE);
 	DrawBox(310 + 4, 240 + 4, 600 + 4, 440 + 4, GetColor(255, 255, 255), FALSE);
-	DrawBox(310 + 6, 240 + 6, 600 - 2, 440 - 2, GetColor(240, 240, 105), TRUE);
+	DrawBox(310 + 6, 240 + 6, 600 - 2, 440 - 2, GetColor(200, 200, 245), TRUE);
 	
 	//スキルお品書き(後々所持スキルを表示するようにする)
 	SetFontSize(20);
-	ChangeFont("メイリオ");
+	ChangeFont("ＭＳゴシック");
 
-	for (i = 0; i < 4; i++) {
+	for (i = 0; i < 6; i++) {
 		for (j = 0; j < sk[i].number; j++) {
 
 			//スキル発動用の玉の色をgeneより抽出

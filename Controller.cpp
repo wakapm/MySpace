@@ -30,10 +30,23 @@ void Controller(ch_t *ch) {
 	}
 	//左右シャッフル
 	if (Key[KEY_INPUT_Z] == 1) {
-		hoge = ch->map[ch->x][ch->y + 8];
-		ch->map[ch->x][ch->y + 8] = ch->map[ch->x + 1][ch->y + 8];
-		ch->map[ch->x + 1][ch->y + 8] = hoge;
-		main_state = 1;
+
+		switch (ch->mode) {
+
+			case 0://横２
+				hoge = ch->map[ch->x][ch->y + 8];
+				ch->map[ch->x][ch->y + 8] = ch->map[ch->x + 1][ch->y + 8];
+				ch->map[ch->x + 1][ch->y + 8] = hoge;
+				main_state = 1;
+				break;
+
+			case 1://固定化モード
+				if (ch->map[ch->x][ch->y + 8] < 10) {
+					ch->map[ch->x][ch->y + 8] += 10;
+				}
+				break;
+		}
+
 	}
 	//攻撃確定
 	if (Key[KEY_INPUT_C] == 1) {
@@ -44,6 +57,16 @@ void Controller(ch_t *ch) {
 			ch->reserve[i][ch->set_y] = 1;
 		}
 		main_state = 1;
+	}
+	//固定化モード
+	if (Key[KEY_INPUT_V] == 1) {
+		//横２⇔固定化
+		if (ch->mode == 0) {
+			ch->mode = 1;
+		}
+		else {
+			ch->mode = 0;
+		}
 	}
 
 }

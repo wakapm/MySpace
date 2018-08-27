@@ -80,6 +80,10 @@ typedef struct {
 	//ルール用のステート変数
 	int rule_state;
 
+	//操作モード
+	//0:横２、1:固定化
+	int mode;
+
 }ch_t;
 
 //画像用構造体
