@@ -6,44 +6,49 @@ extern int main_state;
 
 void Battle(ch_t *ch, enemy_t *en, skill_t sk[]) {
 
-	int i, hoge;
+	int i,j,k;
+	int chk_num;
 
-	if (Key[KEY_INPUT_X] == 1) {
+	switch (ch->battle_state) {
 
-		//	break;
-	}
-	//右押したら右。(横2マスの枠なので-2)
-	if (Key[KEY_INPUT_RIGHT] == 1 && ch->x != PUZ_ROW - 2) {
-		ch->x++;
-	}
-	//左押したら左。
-	if (Key[KEY_INPUT_LEFT] == 1 && ch->x != 0) {
-		ch->x--;
-	}
-	//上押したら上。
-	if (Key[KEY_INPUT_UP] == 1 && ch->y != 0) {
-		ch->y--;
-	}
-	//下押したら下。無ければ右下。
-	if (Key[KEY_INPUT_DOWN] == 1 && ch->y != PUZ_COL - 1) {
-		ch->y++;
-	}
-	//左右シャッフル
-	if (Key[KEY_INPUT_Z] == 1) {
-		hoge = ch->map[ch->x][ch->y + 8];
-		ch->map[ch->x][ch->y + 8] = ch->map[ch->x + 1][ch->y + 8];
-		ch->map[ch->x + 1][ch->y + 8] = hoge;
-		main_state = 1;
-	}
-	//攻撃確定
-	if (Key[KEY_INPUT_C] == 1) {
-		//消去のルール適用
-		ch->rule_state = 1;
-		//セットの枠の玉を消去
+	case 0:
+
+		//攻撃枠の左からループ
 		for (i = 0; i < PUZ_ROW; i++) {
-			ch->reserve[i][ch->set_y] = 1;
+
+			//手持ちスキルのループ
+			for (j = 0; j < 6; j++) {
+
+				//はみ出る場合は探索しない
+				if (i + sk[j].number > PUZ_ROW) {
+					continue;
+				}
+				//スキルとの合致をチェック
+				for (k = 0; k < sk[j].number; k++) {
+
+					//geneから数字の抜き出し(高い桁(左)から探索)
+					chk_num = Pick_Number(sk[j].gene, sk[j].number - k);
+
+					//色が一致したら
+					if (chk_num == ch->map[i+k][ch->set_y + PUZ_COL]) {
+						//gene最後の数ならスキル発動
+						if (k == sk[j].number - 1) {
+							en->hp -= sk[j].base_damage;
+						}
+						//最後の数でないなら探索続行
+					}
+					else {
+						//違えばこのスキルの探索は中断
+						break;
+					}
+				}
+			}
+		
 		}
+
 		main_state = 1;
+		break;
+
 	}
 
 }

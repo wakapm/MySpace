@@ -56,7 +56,7 @@ void Controller(ch_t *ch) {
 		for (i = 0; i < PUZ_ROW; i++) {
 			ch->reserve[i][ch->set_y] = 1;
 		}
-		main_state = 1;
+		main_state = 2;
 	}
 	//å≈íËâªÉÇÅ[Éh
 	if (Key[KEY_INPUT_V] == 1) {
