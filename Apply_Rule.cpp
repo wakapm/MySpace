@@ -210,7 +210,7 @@ int Gravity_Search(ch_t *ch,int x,int y) {
 
 void Set_Burst(ch_t *ch, int x, int y) {
 	
-	int my,i;
+	int my;
 	
 	//”j—ô”‚ÌƒCƒ“ƒNƒŠƒƒ“ƒg
 	ch->burst_current++;

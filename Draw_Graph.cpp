@@ -17,11 +17,14 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en,skill_t sk[]) {
 	DrawBox(0, 0, 640, 480, GetColor(0, 0, 0), TRUE);
 	//背景描画
 	DrawGraph(0, 0, gr->scape[0], TRUE);
+//	// 画面を白で塗りつぶす
+//	DrawBox(0, 0, 640, 480, GetColor(255, 255, 255), TRUE);
 
 	//パズル背景
 	//DrawBox(PUZZLE_X, PUZZLE_Y, 32 * PUZ_ROW + PUZZLE_X, 32 * PUZ_COL + PUZZLE_Y, GetColor(255, 255, 255), TRUE);
 	DrawBox(PUZZLE_X, PUZZLE_Y, 32 * PUZ_ROW + PUZZLE_X, 32 * PUZ_COL + PUZZLE_Y, GetColor(55, 55, 55), TRUE);
 	DrawExtendGraph(PUZZLE_X, PUZZLE_Y, 32*PUZ_ROW + PUZZLE_X, 32 * PUZ_COL + PUZZLE_Y, gr->skill_window[0], TRUE);
+
 
 	//玉描画
 	for (i = 0; i < 8; i++) {
@@ -92,10 +95,21 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en,skill_t sk[]) {
 	DrawBox(310, 240, 600, 440, GetColor(255, 255, 255), FALSE);
 	DrawBox(310 + 4, 240 + 4, 600 + 4, 440 + 4, GetColor(255, 255, 255), FALSE);
 	DrawBox(310 + 6, 240 + 6, 600 - 2, 440 - 2, GetColor(200, 200, 245), TRUE);
+
+	DrawExtendGraph(310, 240, 600, 440, gr->skill_window[1], TRUE);
 	
+
+	//フォント設定
+
+	SetFontSize(26);
+	ChangeFont("ＭＳゴシック");
+
+	//残り時間表示
+	DrawFormatString(40 + 1, 40 + 1, GetColor(255, 100, 100), "残り%.1f", ch->time);//影
+	DrawFormatString(40    , 40    , GetColor(255, 150, 150), "残り%.1f", ch->time);//
+
 	//スキルお品書き(後々所持スキルを表示するようにする)
 	SetFontSize(20);
-	ChangeFont("ＭＳゴシック");
 
 	for (i = 0; i < 6; i++) {
 		for (j = 0; j < sk[i].number; j++) {

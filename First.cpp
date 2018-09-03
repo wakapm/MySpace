@@ -35,6 +35,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		switch(main_state) {
 			case 0:
 				Controller(&ch);
+				Time_Countdown(&ch);
 				break;
 			case 1:
 				Move_Only_Controller(&ch);
@@ -83,6 +84,9 @@ void Init(ch_t *ch,enemy_t *en) {
 	//変数初期化
 	ch->rule_state = 0;
 	ch->battle_state = 0;
+
+	//時間初期化
+	ch->time = 30.0;
 
 	//後々ちゃんと入れる
 	//敵のステータス

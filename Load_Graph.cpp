@@ -18,8 +18,11 @@ void Load_Graph(graph_t *gr) {
 
 	gr->skill_window[0] = LoadGraph("img/Tips_waku.png");
 
+
 	// “§‰ßF‚ð•ÏX
 	SetTransColor(255, 255, 255);
+
+	gr->skill_window[1] = LoadGraph("img/m_win3.png");
 
 	gr->hp_bar[0] = LoadGraph("img/nframe128_32.png");
 	gr->hp_bar[1] = LoadGraph("img/ngage128_32.png");

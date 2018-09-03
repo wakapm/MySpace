@@ -73,9 +73,6 @@ void Controller(ch_t *ch) {
 
 void Move_Only_Controller(ch_t *ch) {
 
-	int hoge;
-
-
 	//右押したら右。(横2マスの枠なので-2)
 	if (Key[KEY_INPUT_RIGHT] == 1 && ch->x != PUZ_ROW - 2) {
 		ch->x++;
@@ -94,4 +91,9 @@ void Move_Only_Controller(ch_t *ch) {
 	}
 
 
+}
+
+void Time_Countdown(ch_t *ch) {
+
+	ch->time -= (double)1 / 60;
 }

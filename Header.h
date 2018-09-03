@@ -79,10 +79,15 @@ typedef struct {
 
 	//ルール用のステート変数
 	int rule_state;
+	//戦闘用のステート変数
+	int battle_state;
 
 	//操作モード
 	//0:横２、1:固定化
 	int mode;
+
+	//時間
+	double time;
 
 }ch_t;
 
@@ -199,6 +204,7 @@ extern void Load_Graph(graph_t *gr);
 
 extern void Controller(ch_t *ch);
 extern void Move_Only_Controller(ch_t *ch);
+extern void Time_Countdown(ch_t *ch);
 
 //【Apply_Rule.cpp】
 
