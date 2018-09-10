@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "Header.h"
+LPCSTR font_path;//フォント
 
 void Load_Skill(skill_t sk[]) {
 
@@ -28,4 +29,18 @@ void Load_Skill(skill_t sk[]) {
 	sk[5].gene = 45454545;//緑紫緑紫緑紫緑紫
 	sk[5].base_damage = 100;
 
+}
+
+//フォントのロード
+void Load_Font() {
+	// ********** フォントのロード **********
+	font_path = "font/toroman.ttf"; // 読み込むフォントファイルのパス
+								  //font_path = "font/PixelMplus12-Regular.ttf"; // 読み込むフォントファイルのパス
+
+	if (AddFontResourceEx(font_path, FR_PRIVATE, NULL) > 0) {
+	}
+	else {
+		// フォント読込エラー処理
+		MessageBox(NULL, "フォント読込失敗", "", MB_OK);
+	}
 }

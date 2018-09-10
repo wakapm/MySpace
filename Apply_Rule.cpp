@@ -138,11 +138,17 @@ void Apply_Rule(ch_t *ch, graph_t *gr) {
 				//落下物なかったら操作可能
 				ch->rule_state = 0;
 				main_state = 0;
+
+				//連鎖数リセット
+				ch->chain = 1;
 			}
 			else {
 				//もう一回消去チェックのため、フラグ初期化
 				fall_flag = 0;
 				ch->rule_state++;
+
+				//連鎖数カウント
+				ch->chain++;
 			}
 			
 			break;

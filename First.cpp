@@ -25,6 +25,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Load_Graph(&gr);
 	Load_Skill(sk);
+	Load_Font();
 	Init(&ch,&en);
 
 	while (!ProcessMessage() && !ClearDrawScreen()
@@ -87,6 +88,9 @@ void Init(ch_t *ch,enemy_t *en) {
 
 	//時間初期化
 	ch->time = 30.0;
+
+	//連鎖数初期化
+	ch->chain = 1;
 
 	//後々ちゃんと入れる
 	//敵のステータス
@@ -226,6 +230,7 @@ void Final_Check(ch_t *ch,int x,int y) {
 }
 
 /*
+20180911 引っ越し関連の作業もありモチベがダウン。アンニャントロマンフォントの使用と連鎖表示を実装。
 20180901 スキル判定作成。思ったより簡単だった。
 20180827 まだ攻撃用のスキル判定は作っていないが、テストプレイで枠内に任意の列を作ろうとしてみたら、思いのほか難しいことが発覚。（意図せず消えるため）
 　　　　 試しにVキーで固定化(?)させる操作を追加。これで誤爆しそうなところを事前に固定したりするという案。

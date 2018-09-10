@@ -89,6 +89,9 @@ typedef struct {
 	//ŠÔ
 	double time;
 
+	//˜A½
+	int chain;
+
 }ch_t;
 
 //‰æ‘œ—p\‘¢‘Ì
@@ -216,7 +219,8 @@ extern void Set_Burst(ch_t *ch, int x, int y);
 
 extern void Battle(ch_t *ch, enemy_t *en,skill_t sk[]);
 
-//
+//yLoad_Skill.cppz
 
 extern void Load_Skill(skill_t sk[]);
+extern void Load_Font();
 #endif

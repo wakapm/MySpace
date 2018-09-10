@@ -102,11 +102,13 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en,skill_t sk[]) {
 	//フォント設定
 
 	SetFontSize(26);
-	ChangeFont("ＭＳゴシック");
+	ChangeFont("アンニャントロマン", DX_CHARSET_DEFAULT);
+//	ChangeFont("ＭＳゴシック");
+
 
 	//残り時間表示
-	DrawFormatString(40 + 1, 40 + 1, GetColor(255, 100, 100), "残り%.1f", ch->time);//影
-	DrawFormatString(40    , 40    , GetColor(255, 150, 150), "残り%.1f", ch->time);//
+	DrawFormatString(40 + 1, 40 + 1, GetColor(15, 0, 0), "のこり%.1f", ch->time);//影
+	DrawFormatString(40    , 40    , GetColor(255, 150, 150), "のこり%.1f", ch->time);//
 
 	//スキルお品書き(後々所持スキルを表示するようにする)
 	SetFontSize(20);
@@ -124,6 +126,13 @@ void Draw_Graph(ch_t *ch, graph_t *gr,enemy_t *en,skill_t sk[]) {
 		DrawFormatString(320 + 20 * j    , 250 + 20 * i    , mes_color, "%dダメージ", sk[i].base_damage);//
 	}
 	//DrawExtendGraph(360, 240, 600, 440, gr->skill_window[0], TRUE);
+
+	//連鎖数表示
+	if (ch->chain >= 2 && (ch->rule_state == 1|| ch->rule_state == 2)) {
+		SetFontSize(26);
+		DrawFormatString(180 + 1, 40 + 1, shd_color, "%dれんさ", ch->chain);//影
+		DrawFormatString(180    , 40, mes_color, "%dれんさ", ch->chain);//
+	}
 
 
 	//玉消去時の破裂描画
